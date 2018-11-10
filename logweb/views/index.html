@@ -1,0 +1,86 @@
+<div class="span12">
+
+    <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+    <div class="portlet box blue">
+
+        <div class="portlet-title">
+
+            <div class="caption"><i class="icon-edit"></i>日志路径</div>
+
+            <div class="tools">
+
+                <a href="javascript:;" class="collapse"></a>
+
+                <a href="#portlet-config" data-toggle="modal" class="config"></a>
+
+                <a href="javascript:;" class="reload"></a>
+
+                <a href="javascript:;" class="remove"></a>
+
+            </div>
+
+        </div>
+
+        <div class="portlet-body">
+
+            <div class="clearfix">
+
+                <div class="btn-group">
+
+                    <button id="sample_editable_1_new"   class="btn green">
+
+                    <a class="add" href="/etcdadd">添加路径</a> <i class="icon-plus"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+            <table class="table table-striped table-hover table-bordered" id="sample_editable_1">
+
+                <thead>
+
+                    <tr>
+
+                        <th>EtcdKey</th>
+
+                        <th>LogFile</th>
+
+                        <th>Topic</th>
+
+                        <th>Edit</th>
+
+                        <th>Delete</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                    {{range .LogValue}}
+                    <tr class="">
+
+                        <td>{{.Key}}</td>
+                        <td>{{.LogPath}}</td>
+
+                        <td class="center">{{.Topic}}</td>
+
+                        <td><a class="edit" href="/modfylist?key={{.Key}}">编辑</a></td>
+
+                        <td><a class="delete" href="/delete?key={{.Key}}">删除</a></td>
+
+                    </tr>
+                     {{end}}
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- END EXAMPLE TABLE PORTLET-->
+
+</div>

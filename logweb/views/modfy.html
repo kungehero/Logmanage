@@ -1,0 +1,71 @@
+<div class="portlet box blue">
+
+	<div class="portlet-title">
+
+		<div class="caption"><i class="icon-reorder"></i> 修改日志收集路径</div>
+
+		<div class="tools">
+
+			<a href="javascript:;" class="collapse"></a>
+
+			<a href="#portlet-config" data-toggle="modal" class="config"></a>
+
+			<a href="javascript:;" class="reload"></a>
+
+			<a href="javascript:;" class="remove"></a>
+
+		</div>
+
+	</div>
+
+	<div class="portlet-body form">
+
+		<!-- BEGIN FORM-->
+
+		<form id="form"  method="POST" action="/modfy"  class="form-horizontal">
+
+			<div class="control-group warning">
+
+				<label class="control-label" for="inputWarning">日志路径:</label>
+
+				<div class="controls">
+
+					<input type="text" class="span6 m-wrap" name="logfile" />
+
+					<span class="help-inline">文件路径</span>
+
+				</div>
+
+			</div>
+
+			<div class="control-group error">
+
+				<label class="control-label" for="inputError">topic:</label>
+
+				<div class="controls">
+
+					<input type="text" class="span6 m-wrap" name="topic" />
+
+					<span class="help-inline"></span>
+
+				</div>
+
+			</div>
+
+			<div class="form-actions">
+
+				<button type="submit" class="btn blue">确定</button>
+
+				<button type="button" class="btn">取消</button>
+
+			</div>
+
+		</form>
+
+		<!-- END FORM-->
+
+	</div>
+
+</div>
+
+<!-- END VALIDATION STATES-->
