@@ -2,6 +2,7 @@ package logappend
 
 import (
 	"Logmanage/models"
+	"fmt"
 	"time"
 
 	"github.com/hpcloud/tail"
@@ -29,7 +30,10 @@ func ReadLogWithTailf() {
 	for _, LogpathStruct := range models.EtcdValue {
 		models.NewTailf(LogpathStruct.LogPath)
 		go LogRun(models.Tails, LogpathStruct.Topic, ch)
-		ch <- true
+	}
+
+	for v := range ch {
+		fmt.Println(v)
 	}
 }
 
@@ -43,9 +47,9 @@ func LogRun(tails *tail.Tail, topic string, ch chan bool) {
 			time.Sleep(100 * time.Millisecond)
 			continue
 		}
-
+		fmt.Println(msg.Text)
 		//{{  传入kafka函数   }}
 		models.SendToKafka(msg.Text, topic)
 	}
-	<-ch
+	ch <- true
 }

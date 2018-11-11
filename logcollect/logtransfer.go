@@ -2,7 +2,6 @@ package logcollect
 
 import (
 	"Logmanage/models"
-	"context"
 	"fmt"
 
 	"github.com/Shopify/sarama"
@@ -29,12 +28,17 @@ func init() {
 }
 
 func ReadLogWithEs() {
+	ch := make(chan bool)
 	for _, LogpathStruct := range models.EtcdValue {
-		Run(LogpathStruct.Topic)
+		Run(LogpathStruct.Topic, ch)
+	}
+
+	for v := range ch {
+		fmt.Println(v)
 	}
 }
 
-func Run(topic string) {
+func Run(topic string, ch chan bool) {
 	partition_consumer, err := models.Consumerclient.ConsumePartition(topic, 0, sarama.OffsetOldest)
 	if err != nil {
 		fmt.Printf("try create partition_consumer error %s\n", err.Error())
@@ -42,12 +46,13 @@ func Run(topic string) {
 	}
 
 	//defer partition_consumer.Close()
-	for {
+	for true {
 		select {
 		case msg := <-partition_consumer.Messages():
 			content := fmt.Sprintf("msg offset: %d, partition: %d, timestamp: %s, value: %s,topic:%s\n",
 				msg.Offset, msg.Partition, msg.Timestamp.String(), string(msg.Value), msg.Topic)
-			exists, err := models.EsClient.IndexExists("twitter").Do(context.Background())
+			fmt.Println(content)
+			/* 		exists, err := models.EsClient.IndexExists("twitter").Do(context.Background())
 
 			if err != nil {
 				// Handle error
@@ -79,11 +84,12 @@ func Run(topic string) {
 				// Handle error
 				panic(err)
 			}
-			fmt.Printf("Indexed tweet %s to index %s, type %s ,result:%s\n", put1.Id, put1.Index, put1.Type, put1.Result)
+			fmt.Printf("Indexed tweet %s to index %s, type %s ,result:%s\n", put1.Id, put1.Index, put1.Type, put1.Result)*/
 		case err := <-partition_consumer.Errors():
 			fmt.Printf("err :%s\n", err.Error())
 		}
 	}
+	ch <- true
 }
 
 type Tweet struct {
