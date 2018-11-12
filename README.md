@@ -36,7 +36,7 @@ func ReadLogWithTailf() {
 func ReadLogWithEs() {
 	ch := make(chan bool)
 	for _, LogpathStruct := range models.EtcdValue {
-		Run(LogpathStruct.Topic, ch)
+	     go	Run(LogpathStruct.Topic, ch)
 	}
 
 	for v := range ch {
